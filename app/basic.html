@@ -3,40 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Layout</title>
-    <style>
-        .box1 {
-            position: relative;
-            margin: auto;
-            width: 1000px;
-            height: 500px;
-            background: silver;
-        }
-        .box2 {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 200px;
-            height: 200px;
-            border-radius: 200px;
-            background: linear-gradient(45deg, teal, purple);
-            box-shadow: 5px 5px 10px #333;
-            transition: scale 0.5s;
-            animation: move 2s infinite alternate;
-        }
-        .box2:hover {
-            scale: 1.1;
-        }
-        @keyframes move {
-            0% { top: 0; left: 0; }
-            50% { top: 300px; left: 400px; }
-            100% { top: 0; left: 800px; }
-        }
-    </style>
+    <title>JavaScript</title>
 </head>
 <body>
-    <div class="box1">
-        <div class="box2"></div>
-    </div>
+    <p>Lorem ipsum dolor sit amet.</p>
+    <button onclick="hello()">Button</button>
+
+    <script>
+        function hello() {
+            var p = document.querySelector("p");
+            p.style.background = "cyan";
+            p.style.padding = "20px";
+            p.style.borderLeft = "5px solid darkblue";
+            p.textContent = "Hello JavaScript";
+        }
+    </script>
 </body>
 </html>
