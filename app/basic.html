@@ -3,20 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaScript</title>
+    <title>JS</title>
 </head>
 <body>
-    <p>Lorem ipsum dolor sit amet.</p>
-    <button onclick="hello()">Button</button>
-
-    <script>
-        function hello() {
-            var p = document.querySelector("p");
-            p.style.background = "cyan";
-            p.style.padding = "20px";
-            p.style.borderLeft = "5px solid darkblue";
-            p.textContent = "Hello JavaScript";
-        }
-    </script>
+    <div id="app"></div>
+    
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

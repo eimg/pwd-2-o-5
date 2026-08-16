@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container" style="max-width: 600px">
+            <a href="#" class="navbar-brand">Todo</a>
+        </div>
+    </nav>
+
+    <div class="container" style="max-width: 600px">
+        <form class="input-group my-4">
+            <input type="text" class="form-control">
+            <button class="btn btn-dark">Add</button>
+        </form>
+        
+        <ul id="todo" class="list-group"></ul>
+        <ul id="done" class="list-group mt-4 opacity-50"></ul>
+    </div>
+
+    <script>
+        document.querySelector("form").onsubmit = e => {
+            e.preventDefault();
+
+            let text = document.querySelector("input").value;
+            if(!text) return false;
+
+            createItem(text);
+
+            e.currentTarget.reset();
+        }
+
+        function createItem(text) {
+            let li = document.createElement("li");
+            li.classList.add("list-group-item");
+            li.textContent = text;
+
+            let check = document.createElement("a");
+            check.setAttribute("href", "#");
+            check.classList.add("fa-solid", "fa-check", "float-start", "me-2");
+            check.onclick = () => {
+                document.querySelector("#done").appendChild(li);
+                check.remove();
+            }
+            li.appendChild(check);
+
+            let del = document.createElement("a");
+            del.setAttribute("href", "#");
+            del.classList.add("fa-solid", "fa-trash", "text-danger", "float-end");
+            del.onclick = () => {
+                li.remove();
+            }
+            li.appendChild(del);
+
+            document.querySelector("#todo").appendChild(li);
+        }
+    </script>
+</body>
+</html>
