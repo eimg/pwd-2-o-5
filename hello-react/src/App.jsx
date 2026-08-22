@@ -3,17 +3,23 @@ import { useState, useRef } from "react";
 import Item from "./Item";
 import Header from "./Header";
 
-import { Container, IconButton, List, OutlinedInput } from "@mui/material";
+import {
+	Container,
+	Divider,
+	IconButton,
+	List,
+	OutlinedInput,
+} from "@mui/material";
 
 import { Add as AddIcon } from "@mui/icons-material";
 
 export default function App() {
 	const inputRef = useRef();
 
-	const [data, setDate] = useState([
-		{ id: 3, name: "Egg" },
-		{ id: 2, name: "Bread" },
-		{ id: 1, name: "Butter" },
+	const [data, setData] = useState([
+		{ id: 3, name: "Egg", done: false },
+		{ id: 2, name: "Bread", done: true },
+		{ id: 1, name: "Butter", done: false },
 	]);
 
 	const add = () => {
@@ -22,16 +28,25 @@ export default function App() {
 
 		const id = data[0] ? data[0].id + 1 : 1;
 
-		setDate([{ id, name }, ...data]);
+		setData([{ id, name }, ...data]);
 	};
 
 	const del = id => {
-		setDate(data.filter(item => item.id != id));
+		setData(data.filter(item => item.id != id));
+	};
+
+	const toggle = id => {
+		setData(
+			data.map(item => {
+				if (item.id == id) item.done = !item.done;
+				return item;
+			}),
+		);
 	};
 
 	return (
 		<div>
-			<Header />
+			<Header count={data.filter(item => !item.done).length} />
 
 			<Container
 				maxWidth="sm"
@@ -54,14 +69,33 @@ export default function App() {
 				</form>
 
 				<List>
-					{data.map(item => {
-						return (
-							<Item
-								item={item}
-								del={del}
-							/>
-						);
-					})}
+					{data
+						.filter(item => !item.done)
+						.map(item => {
+							return (
+								<Item
+									item={item}
+									del={del}
+                                    toggle={toggle}
+								/>
+							);
+						})}
+				</List>
+
+				<Divider />
+
+				<List>
+					{data
+						.filter(item => item.done)
+						.map(item => {
+							return (
+								<Item
+									item={item}
+									del={del}
+                                    toggle={toggle}
+								/>
+							);
+						})}
 				</List>
 			</Container>
 		</div>
