@@ -74,6 +74,7 @@ export default function App() {
 						.map(item => {
 							return (
 								<Item
+                                    key={item.id}
 									item={item}
 									del={del}
                                     toggle={toggle}
@@ -90,6 +91,7 @@ export default function App() {
 						.map(item => {
 							return (
 								<Item
+                                    key={item.id}
 									item={item}
 									del={del}
                                     toggle={toggle}
