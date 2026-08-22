@@ -1,18 +1,11 @@
 import { useState, useRef } from "react";
 
-function Item({ item, del }) {
-	return (
-		<li>
-			{item.name}
-			<button
-				onClick={() => {
-					del(item.id);
-				}}>
-				Del
-			</button>
-		</li>
-	);
-}
+import Item from "./Item";
+import Header from "./Header";
+
+import { Container, IconButton, List, OutlinedInput } from "@mui/material";
+
+import { Add as AddIcon } from "@mui/icons-material";
 
 export default function App() {
 	const inputRef = useRef();
@@ -38,29 +31,39 @@ export default function App() {
 
 	return (
 		<div>
-			<h1>Hello React</h1>
-			<form
-				onSubmit={e => {
-					e.preventDefault();
-					add();
-					e.currentTarget.reset();
-				}}>
-				<input
-					type="text"
-					ref={inputRef}
-				/>
-				<button type="submit">Add</button>
-			</form>
-			<ul>
-				{data.map(item => {
-					return (
-						<Item
-							item={item}
-							del={del}
-						/>
-					);
-				})}
-			</ul>
+			<Header />
+
+			<Container
+				maxWidth="sm"
+				sx={{ mt: 4 }}>
+				<form
+					onSubmit={e => {
+						e.preventDefault();
+						add();
+						e.currentTarget.reset();
+					}}>
+					<OutlinedInput
+						fullWidth
+						inputRef={inputRef}
+						endAdornment={
+							<IconButton type="submit">
+								<AddIcon />
+							</IconButton>
+						}
+					/>
+				</form>
+
+				<List>
+					{data.map(item => {
+						return (
+							<Item
+								item={item}
+								del={del}
+							/>
+						);
+					})}
+				</List>
+			</Container>
 		</div>
 	);
 }
