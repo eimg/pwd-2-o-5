@@ -1,28 +1,36 @@
-import { Avatar, Box, Button, ButtonGroup, Card, IconButton, Typography } from "@mui/material";
+import {
+	Avatar,
+	Box,
+	Button,
+	ButtonGroup,
+	Card,
+	IconButton,
+	Typography,
+} from "@mui/material";
 import { green, grey } from "@mui/material/colors";
 
 import {
-    FavoriteBorderOutlined as LikeIcon,
-    ChatBubbleOutlineOutlined as CommentIcon,
+	FavoriteBorderOutlined as LikeIcon,
+	ChatBubbleOutlineOutlined as CommentIcon,
 } from "@mui/icons-material";
 
-export default function PostCard() {
+import { useNavigate } from "react-router";
+
+export default function PostCard({ post }) {
+	const navigate = useNavigate();
+
 	return (
 		<Card sx={{ p: 2, mb: 2 }}>
 			<Box sx={{ display: "flex", gap: 2, mb: 2 }}>
 				<Avatar sx={{ bgcolor: green[500], width: 52, height: 52 }} />
 				<Box>
-					<Typography sx={{ fontWeight: "bold" }}>Alice</Typography>
+					<Typography sx={{ fontWeight: "bold" }}>
+						{post.user.name}
+					</Typography>
 					<Typography sx={{ color: green[500], mb: 1 }}>
-						A few seconds ago
+						{post.created}
 					</Typography>
-					<Typography>
-						Lorem ipsum dolor sit amet consectetur, adipisicing
-						elit. Ea eligendi ullam ut sapiente exercitationem fugit
-						iure deleniti labore quia culpa, accusamus recusandae,
-						odit blanditiis quaerat natus? Veniam dolorem nihil
-						incidunt?
-					</Typography>
+					<Typography>{post.content}</Typography>
 				</Box>
 			</Box>
 			<Box sx={{ display: "flex", justifyContent: "space-around" }}>
@@ -33,17 +41,19 @@ export default function PostCard() {
 					<Button
 						variant="text"
 						size="sm">
-						10
+						{post.likes ? post.likes.length : 0}
 					</Button>
 				</ButtonGroup>
 				<ButtonGroup>
-					<IconButton size="sm">
+					<IconButton
+						size="sm"
+						onClick={() => navigate(`/view/${post.id}`)}>
 						<CommentIcon sx={{ color: grey[500] }} />
 					</IconButton>
 					<Button
 						variant="text"
 						size="sm">
-						5
+						{post.comments ? post.comments.length : 0}
 					</Button>
 				</ButtonGroup>
 			</Box>
