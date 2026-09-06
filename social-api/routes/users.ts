@@ -8,6 +8,15 @@ import jwt from "jsonwebtoken";
 
 import { auth } from "../middlewares/auth";
 
+router.get("/verify", auth, async (req, res) => {
+    const id = res.locals.user.id;
+    const user = await prisma.user.findFirst({
+        where: { id },
+    });
+
+    res.json(user);
+});
+
 router.get("/users", auth, async (req, res) => {
 	const users = await prisma.user.findMany({
 		take: 20,

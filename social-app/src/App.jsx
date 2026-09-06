@@ -1,8 +1,7 @@
 import { Container } from "@mui/material";
 import AppDrawer from "./components/AppDrawer";
 import Header from "./components/Header";
-
-import ViewPost from "./pages/ViewPost";
+import { Outlet } from "react-router";
 
 export default function App() {
     return <div>
@@ -10,7 +9,7 @@ export default function App() {
         <AppDrawer />
 
         <Container sx={{ mt: 4 }} maxWidth="sm">
-            <ViewPost />
+            <Outlet />
         </Container>
     </div>
 }

@@ -2,6 +2,7 @@ import { AppBar, Badge, IconButton, Toolbar, Typography } from "@mui/material";
 
 import {
 	Menu as MenuIcon,
+	ArrowBack as BackIcon,
 	LightMode as LightModeIcon,
 	DarkMode as DarkModeIcon,
 	Notifications as NotiIcon,
@@ -9,18 +10,33 @@ import {
 
 import { useApp } from "../AppProvider";
 
+import { useLocation, useNavigate } from "react-router";
+
 export default function Header() {
 	const { mode, setMode, setOpenDrawer, auth } = useApp();
+
+	const { pathname } = useLocation();
+	const navigate = useNavigate();
 
 	return (
 		<AppBar position="static">
 			<Toolbar>
-				<IconButton
-					onClick={() => setOpenDrawer(true)}
-					color="inherit"
-					sx={{ mr: 2 }}>
-					<MenuIcon />
-				</IconButton>
+				{pathname == "/" ? (
+					<IconButton
+						onClick={() => setOpenDrawer(true)}
+						color="inherit"
+						sx={{ mr: 2 }}>
+						<MenuIcon />
+					</IconButton>
+				) : (
+					<IconButton
+						onClick={() => navigate("/")}
+						color="inherit"
+						sx={{ mr: 2 }}>
+						<BackIcon />
+					</IconButton>
+				)}
+
 				<Typography sx={{ flexGrow: 1 }}>Social App</Typography>
 
 				{mode == "dark" ? (
