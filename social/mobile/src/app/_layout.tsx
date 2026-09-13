@@ -6,13 +6,15 @@ export default function RootLayout() {
 			<Stack.Screen
 				name="(home)"
 				options={{
+					title: "Home",
 					headerShown: false,
 				}}
 			/>
 			<Stack.Screen
 				name="add-post"
 				options={{
-					title: "Add Post",
+					title: "New Post",
+					presentation: "modal",
 				}}
 			/>
 			<Stack.Screen

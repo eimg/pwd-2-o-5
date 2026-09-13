@@ -1,5 +1,6 @@
-import { Tabs } from "expo-router";
 import { Ionicons } from "@react-native-vector-icons/ionicons";
+import { router, Tabs } from "expo-router";
+import { TouchableOpacity, View } from "react-native";
 
 export default function HomeLayout() {
 	return (
@@ -14,6 +15,17 @@ export default function HomeLayout() {
 							name="home"
 							size={24}
 						/>
+					),
+					headerRight: () => (
+						<View style={{ marginRight: 15 }}>
+							<TouchableOpacity
+								onPress={() => router.push("/add-post")}>
+								<Ionicons
+									name="add"
+									size={24}
+								/>
+							</TouchableOpacity>
+						</View>
 					),
 				}}
 			/>
