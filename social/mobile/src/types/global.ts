@@ -11,7 +11,8 @@ export type UserType = {
     id: number;
     name: string;
     username: string;
-    bio?: string;
+    bio: string | null;
+    created: string;
 };
 
 export type CommentType = {

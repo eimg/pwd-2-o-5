@@ -1,11 +1,9 @@
+import AppProvider from "@/components/app-provider";
 import { Stack } from "expo-router";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-const queryClient = new QueryClient();
 
 export default function RootLayout() {
 	return (
-		<QueryClientProvider client={queryClient}>
+		<AppProvider>
 			<Stack>
 				<Stack.Screen
 					name="(home)"
@@ -28,6 +26,6 @@ export default function RootLayout() {
 					}}
 				/>
 			</Stack>
-		</QueryClientProvider>
+		</AppProvider>
 	);
 }
