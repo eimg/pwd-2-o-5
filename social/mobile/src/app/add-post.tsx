@@ -3,15 +3,16 @@ import { useQueryClient } from "@tanstack/react-query";
 import { router } from "expo-router";
 import { useState } from "react";
 import { Text, View, TextInput, TouchableOpacity } from "react-native";
+import { API_URL } from "@/lib/api";
 
 export default function AddPost() {
 	const [content, setContent] = useState("");
-	const { token } = useApp();
+	const { auth, token } = useApp();
 
 	const queryClient = useQueryClient();
 
 	const create = async () => {
-		const res = await fetch("http://localhost:8800/posts", {
+		const res = await fetch(`${API_URL}/posts`, {
 			method: "POST",
 			body: JSON.stringify({ content }),
 			headers: {
@@ -21,9 +22,10 @@ export default function AddPost() {
 		});
 
 		if (res.ok) {
-			await queryClient.invalidateQueries({
-				queryKey: ["posts"],
-			});
+			await Promise.all([
+				queryClient.invalidateQueries({ queryKey: ["posts"] }),
+				queryClient.invalidateQueries({ queryKey: ["profile", auth?.id] }),
+			]);
 
 			router.dismiss();
 		} else {

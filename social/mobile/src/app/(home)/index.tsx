@@ -2,9 +2,10 @@ import PostCard from "@/components/post-card";
 import { ScrollView, View, Text } from "react-native";
 import { useQuery } from "@tanstack/react-query";
 import type { PostType } from "@/types/global";
+import { API_URL } from "@/lib/api";
 
 async function fetchPosts(): Promise<PostType[]> {
-    const res = await fetch("http://192.168.99.20:8800/posts");
+    const res = await fetch(`${API_URL}/posts`);
 	return res.json();
 }
 

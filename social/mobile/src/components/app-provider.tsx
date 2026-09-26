@@ -13,9 +13,9 @@ import {
 } from "react";
 import type { PropsWithChildren, SetStateAction } from "react";
 import type { UserType } from "@/types/global";
+import { API_URL } from "@/lib/api";
 
 const queryClient = new QueryClient();
-const apiUrl = "http://localhost:8800";
 const TOKEN_KEY = "token";
 
 type AppContextValue = {
@@ -67,7 +67,7 @@ export default function AppProvider({ children }: PropsWithChildren) {
 				if (isActive) setToken(storedToken);
 
 				if (storedToken) {
-					const response = await fetch(`${apiUrl}/verify`, {
+					const response = await fetch(`${API_URL}/verify`, {
 						headers: { Authorization: `Bearer ${storedToken}` },
 					});
 
