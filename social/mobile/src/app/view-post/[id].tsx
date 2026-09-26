@@ -8,12 +8,70 @@ import {
 	TouchableOpacity,
 } from "react-native";
 
+import { useQuery } from "@tanstack/react-query";
+import { PostType } from "@/types/global";
+
+import { formatDistance } from "date-fns";
+
+async function fetchPost(id: string): Promise<PostType> {
+    const res = await fetch(`http://localhost:8800/posts/${id}`);
+    return res.json();
+}
+
 export default function ViewPost() {
 	const { id } = useLocalSearchParams();
 
+    const {
+		data: post,
+		isLoading,
+		error,
+	} = useQuery({
+		queryKey: ["posts", id],
+		queryFn: () => fetchPost(id as string),
+	});
+    
+    if (isLoading) {
+        return (
+            <View
+                style={{
+                    flex: 1,
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}>
+                <Text>Loading...</Text>
+            </View>
+        );
+    }
+
+    if (error) {
+        return (
+            <View
+                style={{
+                    flex: 1,
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}>
+                <Text>{error.message}</Text>
+            </View>
+        );
+    }
+
+    if (!post) {
+		return (
+			<View
+				style={{
+					flex: 1,
+					alignItems: "center",
+					justifyContent: "center",
+				}}>
+				<Text>Post not found</Text>
+			</View>
+		);
+	}
+
 	return (
 		<ScrollView>
-			<PostCard />
+			<PostCard post={post} />
 			<View style={{ paddingHorizontal: 15, gap: 8, marginTop: 10 }}>
 				<TextInput
 					style={{
@@ -49,38 +107,29 @@ export default function ViewPost() {
 					borderTopWidth: 1,
 					borderColor: "#66666630",
 				}}>
-				<View
-					style={{
-						padding: 15,
-						borderBottomWidth: 1,
-						borderColor: "#66666630",
-						paddingHorizontal: 20,
-					}}>
-					<Text style={{ fontSize: 16, fontWeight: "bold" }}>
-						Alice
-					</Text>
-					<Text style={{ color: "teal" }}>A few seconds ago</Text>
-					<Text style={{ fontSize: 15, marginTop: 6 }}>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit.
-						sit amet consectetur adipisicing elit.
-					</Text>
-				</View>
-				<View
-					style={{
-						padding: 15,
-						borderBottomWidth: 1,
-						borderColor: "#66666630",
-						paddingHorizontal: 20,
-					}}>
-					<Text style={{ fontSize: 16, fontWeight: "bold" }}>
-						Alice
-					</Text>
-					<Text style={{ color: "teal" }}>A few seconds ago</Text>
-					<Text style={{ fontSize: 15, marginTop: 6 }}>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit.
-						sit amet consectetur adipisicing elit.
-					</Text>
-				</View>
+				
+				{post.comments?.map(comment => {
+                    return (
+						<View
+                            key={comment.id}
+							style={{
+								padding: 15,
+								borderBottomWidth: 1,
+								borderColor: "#66666630",
+								paddingHorizontal: 20,
+							}}>
+							<Text style={{ fontSize: 16, fontWeight: "bold" }}>
+								{comment.user.name}
+							</Text>
+							<Text style={{ color: "teal" }}>
+								{formatDistance(post.created, new Date())}
+							</Text>
+							<Text style={{ fontSize: 15, marginTop: 6 }}>
+								{comment.content}
+							</Text>
+						</View>
+					);
+                })}
 			</View>
 		</ScrollView>
 	);

@@ -1,8 +1,11 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@react-native-vector-icons/ionicons";
 import { router } from "expo-router";
+import { PostType } from "@/types/global";
 
-export default function PostCard() {
+import { formatDistance } from "date-fns";
+
+export default function PostCard({ post }: { post: PostType }) {
 	return (
 		<View
 			style={{
@@ -22,19 +25,19 @@ export default function PostCard() {
 						alignItems: "center",
 						justifyContent: "center",
 					}}>
-					<Text style={{ color: "white" }}>A</Text>
+					<Text style={{ color: "white" }}>
+						{post.user.name[0].toUpperCase()}
+					</Text>
 				</View>
 				<View style={{ flexShrink: 1 }}>
 					<Text style={{ fontSize: 16, fontWeight: "bold" }}>
-						Alice
+						{post.user.name}
 					</Text>
-					<Text style={{ color: "teal" }}>A few seconds ago</Text>
+					<Text style={{ color: "teal" }}>
+                        {formatDistance(post.created, new Date())}
+                    </Text>
 					<Text style={{ fontSize: 15, marginTop: 6 }}>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit.
-						Dignissimos, obcaecati consequuntur distinctio
-						reiciendis esse iste a velit nesciunt porro quos quia
-						animi voluptatem quidem officiis facere, at quod iusto
-						voluptatibus.
+						{post.content}
 					</Text>
 				</View>
 			</View>
@@ -69,7 +72,7 @@ export default function PostCard() {
 						alignItems: "center",
 					}}>
 					<TouchableOpacity
-						onPress={() => router.push("/view-post/123")}>
+						onPress={() => router.push(`/view-post/${post.id}`)}>
 						<Ionicons
 							name="chatbubble-outline"
 							color={"gray"}
@@ -77,8 +80,8 @@ export default function PostCard() {
 						/>
 					</TouchableOpacity>
 					<TouchableOpacity
-						onPress={() => router.push("/view-post/123")}>
-						<Text>3</Text>
+						onPress={() => router.push(`/view-post/${post.id}`)}>
+						<Text>{post.comments.length}</Text>
 					</TouchableOpacity>
 				</View>
 			</View>
