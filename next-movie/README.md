@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next Movie
 
-## Getting Started
+A responsive movie discovery app built with Next.js 16, React 19, and TMDB. The interface pairs a cinematic spotlight with browsable poster shelves, genre collections, search, film details, and cast profiles.
 
-First, run the development server:
+## Run locally
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Install dependencies with `npm install`. Add a `.env` file containing a TMDB API Read Access Token:
+
+```dotenv
+TMDB_TOKEN=your_tmdb_read_access_token
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Run `npm run dev` and open [localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Featured film carousel and popular, top rated, and upcoming collections.
+- Search and genre browsing with pagination.
+- Film details, YouTube trailer links, cast profiles, and recommendations.
+- A watchlist saved in this browser's local storage, with immediate updates across cards and tabs. It does not require an account or sync between devices.
+- Responsive navigation, keyboard shortcuts (Cmd/Ctrl + K to search), keyboard collection tabs, and reduced motion support.
+- Loading skeletons, empty states, and recoverable movie service errors.
 
-## Learn More
+TMDB requests run on the server; the token stays out of the browser. Movie data refreshes hourly. Posters use Next.js image optimization.
 
-To learn more about Next.js, take a look at the following resources:
+## Checks
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run lint
+npx tsc --noEmit
+npm run build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The build requires network access to TMDB and Google Fonts. For production, run `npm run build` followed by `npm start`.
